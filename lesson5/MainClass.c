@@ -20,8 +20,8 @@ struct Stack
 	int maxSize;
 };
 struct Stack Stack;
-
 struct Stack Stack2;
+struct Stack Stack3;
 
 void push(T value)
 {
@@ -107,6 +107,60 @@ T pop2() {
 	return value;
 }
 
+void push3(T value)
+{
+	if (Stack3.size >= Stack3.maxSize) {
+		printf("Error Stack3 size");
+		return;
+	}
+	Node *tmp = (Node*)malloc(sizeof(Node));
+	tmp->value = value;
+	tmp->next = Stack3.head;
+	Stack3.head = tmp;
+	Stack3.size++;
+	if (Stack3.size >= Stack3.maxSize)
+	{
+		exit(STACK_OVERFLOW);
+	}
+}
+
+T pop3() {
+	if (Stack3.size == 0)
+	{
+		printf("Stack3 is empty");
+		return;
+	}
+	// Временный указатель
+	Node* next = NULL;
+	// Значение «наверху» списка
+	T value;
+	value = Stack3.head->value;
+	next = Stack3.head;
+	Stack3.head = Stack3.head->next;
+	// Запись, на которую указывала «голова», удаляем, освобождая память
+	free(next);
+	// Возвращаем значение, которое было в «голове»
+	Stack3.size--;
+	return value;
+}
+
+void CopyStackToStack()
+{
+	Node *current = Stack.head;
+	while (current != NULL)
+	{
+		push2(current->value);
+		current = current->next;
+	}
+
+	current = Stack2.head;
+	while (current != NULL)
+	{
+		push3(current->value);
+		current = current->next;
+	}
+}
+
 void PrintStack2()
 {
 	Node *current = Stack2.head;
@@ -117,12 +171,12 @@ void PrintStack2()
 	}
 }
 
-void CopyStackToStack2()
+void PrintStack3()
 {
-	Node *current = Stack.head;
+	Node *current = Stack3.head;
 	while (current != NULL)
 	{
-		push2(current->value);
+		printf("%d ", current->value);
 		current = current->next;
 	}
 }
@@ -135,6 +189,8 @@ int main(int argc, char *argv[])
 	Stack.head = NULL;
 	Stack2.maxSize = 100;
 	Stack2.head = NULL;
+	Stack3.maxSize = 100;
+	Stack3.head = NULL;
 
 	//1.	Реализовать перевод из десятичной в двоичную систему счисления с использованием стека.
 	unsigned int a1;
@@ -166,9 +222,8 @@ int main(int argc, char *argv[])
 	//	4.	*Создать функцию, копирующую односвязный список(то есть создающую в памяти копию односвязного списка без удаления первого списка).
 	printf("Скопированный список:");
 
-	CopyStackToStack2();
-
-	PrintStack2();
+	CopyStackToStack();
+	PrintStack3();
 
 	printf("\n");
 	system("pause");
