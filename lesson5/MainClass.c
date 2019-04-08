@@ -5,6 +5,11 @@
 
 #define T int
 #define STACK_OVERFLOW  -100
+
+#define Q char
+#define MaxN 1000
+
+
 // Опишем структуру узла списка
 struct TNode
 {
@@ -181,6 +186,39 @@ void PrintStack3()
 	}
 }
 
+Q Que[MaxN];
+
+int N = -1;
+
+int start=0;
+int finish=0;
+
+void pushq(T i)
+{
+	if (N < MaxN)
+	{
+		N++;
+		Que[finish] = i;
+		finish++;
+	}
+	else
+		printf("Stack overflow");
+}
+
+T popq()
+{
+	if (N != -1)
+	{
+		T a = Que[start];
+		start++;
+		N--;
+		return a;
+	}
+	else
+		printf("Stack is empty");
+}
+
+
 int main(int argc, char *argv[])
 {
 	setlocale(LC_ALL, "Rus");
@@ -224,6 +262,22 @@ int main(int argc, char *argv[])
 
 	CopyStackToStack();
 	PrintStack3();
+
+	printf("\n");
+
+	//6.	Реализовать очередь :
+	//1. С использованием массива.
+
+	printf("Очередь через массив:");
+	Q c;
+	pushq('a');
+	pushq('b');
+	pushq('c');
+	pushq('d');
+	pushq('e');
+	pushq('f');
+	while (N != -1)
+		printf("%c", popq());
 
 	printf("\n");
 	system("pause");
